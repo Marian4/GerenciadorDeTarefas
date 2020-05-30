@@ -17,4 +17,4 @@ app.get('/', (req,res) =>{
 app.use(require('./controllers/authController.js'));
 console.log("servidor funcionando")
 
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 3001);
