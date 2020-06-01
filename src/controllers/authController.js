@@ -25,7 +25,7 @@ router.post('/register', async (req,res) =>{
         res.status(400).send({error: 'Registration failed.'});
     }
 })
-
+/*login*/
 router.post('/authenticate', async (req,res) =>{
     const {email, password} = req.body;
     const user = await User.findOne({email}).select('+password');
