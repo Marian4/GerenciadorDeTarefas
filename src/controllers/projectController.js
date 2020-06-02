@@ -15,6 +15,16 @@ router.get('/', async(req,res) =>{
     }
 })
 
+router.get('/logout', async (req,res) => {
+    try{
+        req.headers.authorization = " ";
+        return res.status(200).send('Sucess.');
+    }
+    catch(err){
+        return res.status(400).send({error: 'Logout failed'});
+    }
+})
+
 router.get('/:taskId', async(req,res) =>{
     try{
         const task = await Task.findById(req.params.taskId).populate('user');
@@ -36,11 +46,17 @@ router.post('/create', async(req,res) =>{
     }
 })
 
-router.put('/:taskId', async(req,res) =>{
-    res.send({user: req.userId});
+router.put('/update/:taskId', async(req,res) =>{
+    try{
+        const task = await Task.findByIdAndUpdate(req.params.taskId, req.body, {new: true});
+        return res.status(200).json({task});
+    }
+    catch(err){
+        return res.status(400).send({error: 'Updating failed.'});
+    }
 })
 
-router.delete('/:taskId', async(req,res) =>{
+router.delete('/delete/:taskId', async(req,res) =>{
     try{
         const task = await Task.findByIdAndRemove(req.params.taskId);
         return res.status(200).send('Task deleted.');
@@ -49,6 +65,7 @@ router.delete('/:taskId', async(req,res) =>{
         return res.status(400).send({error: 'Error deleting task.'});
     }
 })
+
 
 module.exports = router;
 
